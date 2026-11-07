@@ -6,13 +6,13 @@ const heroImages = [
   { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=85', alt: 'Children sharing a meal' },
   { src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=85', alt: 'Children receiving nutritious food' },
   { src: 'https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&w=900&q=85', alt: 'Young people enjoying food together' },
-  { src: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85', alt: 'Wholesome community meal' },
-  { src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85', alt: 'Fresh food prepared for sharing' },
-  { src: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=85', alt: 'Fresh vegetables prepared for a meal' },
-  { src: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85', alt: 'Colorful fresh food bowl' },
-  { src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=85', alt: 'Food being prepared to share' },
-  { src: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85', alt: 'Freshly prepared meal' },
-  { src: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85', alt: 'Nutritious meal made with fresh ingredients' },
+  { src: 'https://reflectionsoftrinity.org/wp-content/uploads/2021/12/Food-Distribution-2.jpg', alt: 'Wholesome community meal' },
+  { src: 'https://606ec8658a.nxcli.net/wp-content/uploads/2024/08/image-11.jpeg', alt: 'Fresh food prepared for sharing' },
+  { src: 'https://vednidhifoundation.org/wp-content/uploads/2023/04/food-5.png', alt: 'Fresh vegetables prepared for a meal' },
+  { src: 'https://global.unitednations.entermediadb.net/assets/mediadb/services/module/asset/downloads/preset/Collections/Embargoed/05-04-2024-WFP-Sudan-07.jpg/image3000x3000.jpg', alt: 'Colorful fresh food bowl' },
+  { src: 'https://www.foodbanking.org/wp-content/uploads/2023/08/51810651039_5b63d10fd6_k.jpg', alt: 'Food being prepared to share' },
+  { src: 'https://thumbs.dreamstime.com/b/hands-food-people-donations-charity-humanitarian-service-distribution-closeup-volunteer-group-ngo-giving-collaboration-387611018.jpg', alt: 'Freshly prepared meal' },
+  { src: 'https://borgenproject.org/wp-content/uploads/Child-Poverty-in-Bangladesh.jpg', alt: 'Nutritious meal made with fresh ingredients' },
 ];
 
 export default function Hero({ onOpenSignIn, onOpenDonation }) {
