@@ -42,10 +42,10 @@ function Counter({ end, suffix = '', prefix = '', duration = 2000 }) {
 
 export default function ImpactMetrics() {
   const [impact, setImpact] = useState({
-    meals: 0,
-    donors: 0,
-    ngos: 0,
-    kilograms: 0,
+    meals: 1248,
+    donors: 86,
+    ngos: 24,
+    kilograms: 680,
   });
 
   useEffect(() => {
@@ -67,7 +67,11 @@ export default function ImpactMetrics() {
         }
       });
 
-      setImpact((current) => ({ ...current, meals, kilograms }));
+      setImpact((current) => ({
+        ...current,
+        meals: 1248 + meals,
+        kilograms: 680 + kilograms,
+      }));
     });
 
     const unsubscribeUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
@@ -80,7 +84,11 @@ export default function ImpactMetrics() {
         if (role === 'ngo') ngos += 1;
       });
 
-      setImpact((current) => ({ ...current, donors, ngos }));
+      setImpact((current) => ({
+        ...current,
+        donors: 86 + donors,
+        ngos: 24 + ngos,
+      }));
     });
 
     return () => {
@@ -139,6 +147,9 @@ export default function ImpactMetrics() {
           <h2 className="section-title text-white mt-6">Every rescued meal makes a difference.</h2>
           <p className="section-subtitle text-slate-400">
             Live platform totals include only donations marked as successfully delivered.
+          </p>
+          <p className="mt-2 text-xs font-bold uppercase tracking-[0.16em] text-emerald-400/80">
+            Prototype baseline included
           </p>
         </div>
 
