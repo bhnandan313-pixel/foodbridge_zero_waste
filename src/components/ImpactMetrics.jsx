@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Utensils, Building2, CloudOff, Award } from 'lucide-react';
+import { Utensils, Building2, HandHeart, Scale } from 'lucide-react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 
 function Counter({ end, suffix = '', prefix = '', duration = 2000 }) {
   const [count, setCount] = useState(0);
@@ -39,35 +41,82 @@ function Counter({ end, suffix = '', prefix = '', duration = 2000 }) {
 }
 
 export default function ImpactMetrics() {
+  const [impact, setImpact] = useState({
+    meals: 0,
+    donors: 0,
+    ngos: 0,
+    kilograms: 0,
+  });
+
+  useEffect(() => {
+    const unsubscribeDonations = onSnapshot(collection(db, 'donations'), (snapshot) => {
+      let meals = 0;
+      let kilograms = 0;
+
+      snapshot.forEach((documentSnapshot) => {
+        const donation = documentSnapshot.data();
+        if (donation.status !== 'Delivered') return;
+
+        meals += Number(donation.meals ?? 0);
+        kilograms += Number(donation.weightKg ?? donation.kilograms ?? 0);
+      });
+
+      setImpact((current) => ({ ...current, meals, kilograms }));
+    });
+
+    const unsubscribeUsers = onSnapshot(collection(db, 'users'), (snapshot) => {
+      let donors = 0;
+      let ngos = 0;
+
+      snapshot.forEach((documentSnapshot) => {
+        const role = String(documentSnapshot.data().role ?? '').toLowerCase();
+        if (role === 'donor') donors += 1;
+        if (role === 'ngo') ngos += 1;
+      });
+
+      setImpact((current) => ({ ...current, donors, ngos }));
+    });
+
+    return () => {
+      unsubscribeDonations();
+      unsubscribeUsers();
+    };
+  }, []);
+
   const metrics = [
     {
-      num: 120000,
-      suffix: '+',
-      label: 'Meals Saved',
-      desc: 'Nutritious meals rescued and served',
+      num: impact.meals,
+      label: 'Meals Rescued',
+      desc: 'Successfully redistributed, delivery confirmed',
       icon: Utensils,
-      color: 'text-fresh-400',
+      color: 'text-emerald-400',
     },
     {
-      num: 450,
-      suffix: '+',
-      label: 'Active Donors',
-      desc: 'Restaurants, caterers, and grocers',
+      num: impact.donors,
+      label: 'Food Donors',
+      desc: 'Restaurants and businesses in our network',
       icon: Building2,
-      color: 'text-trust-400',
+      color: 'text-emerald-400',
     },
     {
-      num: 48,
-      suffix: ' Tons',
-      label: 'Carbon Emissions Reduced',
-      desc: 'CO₂ equivalent diverted from landfills',
-      icon: CloudOff,
-      color: 'text-earth-400',
+      num: impact.ngos,
+      label: 'NGO Partners',
+      desc: 'Verified participating organizations',
+      icon: HandHeart,
+      color: 'text-emerald-400',
+    },
+    {
+      num: impact.kilograms,
+      suffix: ' kg',
+      label: 'Food Saved',
+      desc: 'Delivery-confirmed food rescued',
+      icon: Scale,
+      color: 'text-emerald-400',
     },
   ];
 
   return (
-    <section id="impact" className="py-24 bg-gradient-to-b from-slate-900 to-trust-950 text-white relative overflow-hidden">
+    <section id="impact" className="py-24 bg-slate-950 text-white relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-fresh-500/10 rounded-full blur-3xl -translate-y-1/2" />
@@ -76,17 +125,18 @@ export default function ImpactMetrics() {
 
       <div className="relative z-10 section-container px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="section-badge bg-white/10 text-fresh-300 border border-white/10">
-            <Award className="w-3.5 h-3.5" />
-            Real Impact in Numbers
-          </span>
-          <h2 className="section-title text-white mt-6">Every meal counts. Here is proof.</h2>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+            <span className="text-emerald-400 text-xs font-black tracking-[0.25em] uppercase">Our Impact</span>
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+          </div>
+          <h2 className="section-title text-white mt-6">Every rescued meal makes a difference.</h2>
           <p className="section-subtitle text-slate-400">
-            Transparent, auditable data from every donation made through FoodBridge.
+            Live platform totals include only donations marked as successfully delivered.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {metrics.map((metric, i) => {
             const Icon = metric.icon;
             return (
@@ -96,7 +146,7 @@ export default function ImpactMetrics() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 + i * 0.15, duration: 0.5 }}
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:bg-white/10 transition-colors"
+                className="relative rounded-3xl border border-slate-800 bg-slate-900/50 p-8 text-center backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30"
               >
                 <div className="w-14 h-14 rounded-2xl bg-white/10 mx-auto flex items-center justify-center mb-6">
                   <Icon className={`w-7 h-7 ${metric.color}`} />
@@ -110,8 +160,14 @@ export default function ImpactMetrics() {
             );
           })}
         </div>
+
+        <div className="mt-16 max-w-3xl mx-auto text-center">
+          <h3 className="text-2xl md:text-3xl font-black text-white">Our impact goes beyond numbers.</h3>
+          <p className="mt-4 text-slate-400 leading-relaxed">
+            Every successful food rescue represents resources saved, waste prevented, and another opportunity to serve a community.
+          </p>
+        </div>
       </div>
     </section>
   );
 }
-

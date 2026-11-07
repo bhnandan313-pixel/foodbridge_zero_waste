@@ -50,16 +50,20 @@ export default function KeyFeatures() {
   ];
 
   return (
-    <section className="section-padding bg-slate-50">
+    <section className="section-padding bg-slate-950">
       <div className="section-container">
         <motion.div {...fadeInUp} className="text-center mb-16">
-          <span className="section-badge bg-earth-100 text-earth-700">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+            <span className="text-emerald-400 text-xs font-black tracking-[0.25em] uppercase">Key Features</span>
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+          </div>
             <Sparkles className="w-3.5 h-3.5" />
             Key Features
           </span>
-          <h2 className="section-title text-slate-900 mt-6">Built for impact, designed for ease</h2>
-          <p className="section-subtitle">
-            Every feature in FoodBridge is crafted to remove friction and maximize the amount of food rescued.
+          <h2 className="section-title mt-6 text-white font-black tracking-tight">Built for impact, designed for ease</h2>
+          <p className="section-subtitle text-slate-400 leading-relaxed">
+            Every feature in Anna Sethu is crafted to remove friction and maximize the amount of food rescued.
           </p>
         </motion.div>
 
@@ -72,15 +76,15 @@ export default function KeyFeatures() {
                 key={feat.title}
                 {...fadeInUp}
                 transition={{ delay: 0.05 + idx * 0.1, duration: 0.5 }}
-                className={`group ${feat.span} ${feat.bg} ${feat.border} border rounded-3xl p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-default`}
+                className={`group ${feat.span} bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 shadow-2xl shadow-emerald-900/10 hover:-translate-y-1 hover:border-emerald-500/30 transition-all duration-300 cursor-default`}
               >
                 <div
                   className={`w-12 h-12 rounded-xl ${feat.iconBg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}
                 >
                   <Icon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{feat.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{feat.desc}</p>
+                <h3 className="mb-2 text-xl text-white font-black tracking-tight">{feat.title}</h3>
+                <p className="text-sm text-slate-400 leading-relaxed">{feat.desc}</p>
               </motion.div>
             );
           })}
@@ -89,4 +93,3 @@ export default function KeyFeatures() {
     </section>
   );
 }
-

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "15d6ac81-9fbc-4c58-af1c-93f197b73363",
+    "name": "Gagan",
+    "email": "visionaryedit24@gmail.com",
+    "passwordHash": "$2b$12$XLuoMkNXasAPyv7fqTKrfu5ZFDg4bvlKZ0XjrEQ4wbIpB/kE0..uq",
+    "role": "volunteer",
+    "createdAt": "2026-11-07T07:21:48.074Z"
+  },
+  {
+    "id": "891d2ac0-dee9-49d2-a278-b030b7068549",
+    "name": "Gagan",
+    "email": "nandan@gmail.com",
+    "passwordHash": "$2b$12$rk3TGFK4.4EhPuQz4O.HLuvSiGYgPhKm57HHCifw.qlX5QuMX1bcW",
+    "role": "ngo",
+    "createdAt": "2026-11-07T07:33:54.604Z"
+  }
+]

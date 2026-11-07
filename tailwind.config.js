@@ -7,6 +7,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        midnight: {
+          950: '#080F1F',
+          900: '#0D1830',
+          800: '#111D35',
+        },
+        slate: {
+          50: '#F8FAFC',
+          400: '#94A3B8',
+          700: '#263650',
+          800: '#111D35',
+          900: '#111D35',
+          950: '#080F1F',
+        },
         trust: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -23,10 +36,10 @@ export default {
         fresh: {
           50: '#ecfdf5',
           100: '#d1fae5',
-          200: '#a7f3d0',
+          200: '#A7F3D0',
           300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
+          400: '#34D399',
+          500: '#10B981',
           600: '#059669',
           700: '#047857',
           800: '#065f46',
@@ -49,6 +62,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

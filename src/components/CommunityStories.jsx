@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Quote, ChevronLeft, ChevronRight, MessageSquareHeart } from 'lucide-react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const stories = [
   {
     id: 1,
-    role: 'Restaurant Owner',
-    name: 'Chef Rajesh Sharma',
-    org: 'The Spice Pavilion, Bangalore',
-    avatar: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=150&auto=format&fit=crop&q=80',
-    quote:
-      "Before FoodBridge, throwing away 20-30 portions every night broke my heart. Now, it takes us literally two minutes to log the surplus, and within an hour it's being served to children who need it. It's the most rewarding part of running a kitchen.",
+    category: 'From the Donors',
+    role: 'Restaurant experience',
+    name: 'Authorized donor story',
+    org: 'Bengaluru restaurant network',
+    location: 'Bengaluru, Karnataka',
+    quote: 'A donor experience can show how surplus registration becomes a coordinated rescue while keeping food details and pickup information clear.',
   },
   {
     id: 2,
-    role: 'NGO Volunteer Lead',
-    name: 'Priya Narayanan',
-    org: 'Asha Food Drive Foundation',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-    quote:
-      "FoodBridge transformed our operations. We used to spend half our day calling restaurants asking for donations. Now we get instant alerts, know exactly what's coming, and can plan our community distributions with dignity and reliability.",
+    category: 'From the NGOs',
+    role: 'Distribution experience',
+    name: 'Authorized NGO story',
+    org: 'Verified hunger-relief partner',
+    location: 'Location shared with permission',
+    quote: 'An NGO experience can demonstrate how coordinated alerts, verified food details, and delivery confirmation support dignified community distribution.',
+  },
+  {
+    id: 3,
+    category: 'From the Communities',
+    role: 'Community impact',
+    name: 'Community story',
+    org: 'Resident and volunteer network',
+    location: 'Community location shared with permission',
+    quote: 'Community stories can explain how reliable access to rescued food creates dignity, connection, and a better chance for every shared meal.',
   },
 ];
 
@@ -38,15 +47,16 @@ export default function CommunityStories() {
   const prev = () => setCurrent((prev) => (prev - 1 + stories.length) % stories.length);
 
   return (
-    <section id="stories" className="section-padding bg-white overflow-hidden">
+    <section id="stories" className="section-padding bg-slate-950 overflow-hidden">
       <div className="section-container">
         <div className="text-center mb-16">
-          <span className="section-badge bg-fresh-100 text-fresh-700">
-            <MessageSquareHeart className="w-3.5 h-3.5" />
-            Voices from the Ground
-          </span>
-          <h2 className="section-title text-slate-900 mt-6">Community Stories</h2>
-          <p className="section-subtitle">Real people making zero waste a daily reality.</p>
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+              <span className="text-emerald-400 text-xs font-black tracking-[0.25em] uppercase">Voices from the Ground</span>
+              <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+            </div>
+            <h2 className="section-title mt-6 text-white font-black tracking-tight">Real Stories. Real People. Real Impact.</h2>
+            <p className="section-subtitle text-slate-400 leading-relaxed">Behind every rescued meal is a person, a community, and a story worth sharing.</p>
         </div>
 
         {/* Carousel Container */}
@@ -59,26 +69,28 @@ export default function CommunityStories() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.4 }}
-                className="w-full bg-gradient-to-br from-slate-50 to-fresh-50/30 rounded-3xl p-8 sm:p-12 border border-slate-100 shadow-sm"
+                className="w-full bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl shadow-emerald-900/10"
               >
-                <Quote className="w-10 h-10 text-fresh-400 mb-6" />
+                <Quote className="w-10 h-10 text-emerald-400 mb-6" />
 
-                <p className="text-lg sm:text-xl text-slate-700 leading-relaxed italic mb-8">
-                  &ldquo;{stories[current].quote}&rdquo;
+                <span className="block mb-4 text-xs font-black uppercase tracking-[0.2em] text-emerald-400">
+                  {stories[current].category}
+                </span>
+                <p className="text-lg sm:text-xl text-slate-300 leading-relaxed italic mb-8">
+                  {stories[current].quote}
+                </p>
+                <p className="mb-8 text-xs text-slate-500">
+                  Illustrative format — publish only with participant authorization and a permissioned photograph.
                 </p>
 
                 <div className="flex items-center gap-4">
-                  <img
-                    src={stories[current].avatar}
-                    alt={stories[current].name}
-                    className="w-14 h-14 rounded-full object-cover border-2 border-fresh-400 shadow-sm"
-                  />
                   <div>
-                    <h4 className="font-bold text-slate-900 text-base">{stories[current].name}</h4>
-                    <p className="text-xs font-semibold text-fresh-700 uppercase tracking-wider">
+                    <h4 className="font-bold text-white text-base">{stories[current].name}</h4>
+                    <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
                       {stories[current].role}
                     </p>
-                    <p className="text-xs text-slate-500">{stories[current].org}</p>
+                    <p className="text-xs text-slate-400">{stories[current].org}</p>
+                    <p className="text-xs text-slate-500">{stories[current].location}</p>
                   </div>
                 </div>
               </motion.div>
@@ -94,7 +106,7 @@ export default function CommunityStories() {
                   key={s.id}
                   onClick={() => setCurrent(idx)}
                   className={`h-2.5 rounded-full transition-all duration-300 ${
-                    current === idx ? 'w-8 bg-fresh-600' : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                    current === idx ? 'w-8 bg-emerald-400' : 'w-2.5 bg-slate-700 hover:bg-slate-600'
                   }`}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -105,14 +117,14 @@ export default function CommunityStories() {
             <div className="flex gap-2">
               <button
                 onClick={prev}
-                className="p-3 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                className="p-3 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:border-emerald-400 hover:text-emerald-400 transition-colors"
                 aria-label="Previous story"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={next}
-                className="p-3 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                className="p-3 rounded-full bg-slate-900 border border-slate-700 text-slate-300 hover:border-emerald-400 hover:text-emerald-400 transition-colors"
                 aria-label="Next story"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -124,4 +136,3 @@ export default function CommunityStories() {
     </section>
   );
 }
-

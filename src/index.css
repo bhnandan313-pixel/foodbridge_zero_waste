@@ -10,7 +10,19 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-800;
+    @apply bg-[#080F1F] text-[#94A3B8];
+  }
+
+  h1, h2, h3, .section-title {
+    font-family: "Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .section-title {
+    @apply text-[clamp(2.625rem,4.5vw,3.25rem)] leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-base sm:text-lg;
   }
 
   ::selection {
@@ -48,4 +60,130 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.thank-you-wordmark {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  animation: footer-wordmark 1.1s cubic-bezier(.2,.75,.3,1) both;
+}
+
+.sticker-bounce {
+  animation: sticker-bounce 4s ease-in-out infinite;
+}
+
+.signin-tilt-card {
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+  will-change: transform;
+}
+
+.signin-tilt-card:hover {
+  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signin-tilt-card {
+    transition: none;
+  }
+}
+
+.hero-tunnel {
+  perspective: 950px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(74, 222, 128, 0.14), transparent 24%),
+    linear-gradient(180deg, rgba(9, 20, 45, 0.12), rgba(9, 20, 45, 0.82));
+}
+
+.hero-tunnel-track {
+  position: absolute;
+  inset: -8%;
+  transform-style: preserve-3d;
+  mask-image: linear-gradient(to bottom, transparent 4%, black 18%, black 82%, transparent 96%);
+}
+
+.hero-tunnel-card {
+  position: absolute;
+  width: clamp(150px, 21vw, 280px);
+  aspect-ratio: 4 / 3;
+  left: 50%;
+  top: 50%;
+  overflow: hidden;
+  border: 5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  background: #dbeafe;
+  box-shadow: 0 28px 70px rgba(2, 6, 23, 0.55);
+  opacity: 0;
+  transform-origin: center;
+}
+
+.hero-tunnel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.05) brightness(1.16) contrast(1.08);
+  opacity: .88;
+  animation: hero-card-ambient 6s ease-in-out infinite;
+  transition: opacity .35s ease;
+}
+
+.hero-tunnel-card:hover img {
+  opacity: 1;
+}
+
+.hero-tunnel-visible .hero-tunnel-card {
+  animation: tunnel-enter .85s cubic-bezier(.2,.75,.25,1) var(--card-delay) forwards;
+}
+
+.hero-tunnel-visible .hero-tunnel-card-1 { animation-name: tunnel-card-one; }
+.hero-tunnel-visible .hero-tunnel-card-2 { animation-name: tunnel-card-two; }
+.hero-tunnel-visible .hero-tunnel-card-3 { animation-name: tunnel-card-three; }
+.hero-tunnel-visible .hero-tunnel-card-4 { animation-name: tunnel-card-four; }
+.hero-tunnel-visible .hero-tunnel-card-5 { animation-name: tunnel-card-five; }
+
+@keyframes tunnel-card-one {
+  from { opacity: 0; transform: translate3d(-240%, -190%, -700px) rotate(-12deg) scale(.5); }
+  to { opacity: .78; transform: translate3d(-240%, -190%, -90px) rotate(-10deg) scale(.82); }
+}
+
+@keyframes tunnel-card-two {
+  from { opacity: 0; transform: translate3d(150%, -190%, -700px) rotate(10deg) scale(.5); }
+  to { opacity: .8; transform: translate3d(150%, -190%, -70px) rotate(9deg) scale(.82); }
+}
+
+@keyframes tunnel-card-three {
+  from { opacity: 0; transform: translate3d(-245%, 95%, -650px) rotate(8deg) scale(.5); }
+  to { opacity: .82; transform: translate3d(-245%, 95%, -50px) rotate(7deg) scale(.84); }
+}
+
+@keyframes tunnel-card-four {
+  from { opacity: 0; transform: translate3d(145%, 95%, -650px) rotate(-8deg) scale(.5); }
+  to { opacity: .82; transform: translate3d(145%, 95%, -40px) rotate(-7deg) scale(.84); }
+}
+
+@keyframes tunnel-card-five {
+  from { opacity: 0; transform: translate3d(-300%, -20%, -900px) rotate(-16deg) scale(.5); }
+  to { opacity: .58; transform: translate3d(-300%, -20%, -240px) rotate(-16deg) scale(.72); }
+}
+
+@keyframes hero-card-ambient {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -8px, 0) scale(1.025); }
+}
+
+@keyframes footer-wordmark {
+  from {
+    transform: translateY(35%) scaleX(.92);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sticker-bounce {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50% { transform: rotate(-8deg) translateY(-7px); }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { HeartHandshake, UserPlus, Sparkles, CheckCircle2 } from 'lucide-react';
 
-export default function CallToAction({ onOpenModal }) {
+export default function CallToAction({ onOpenSignIn, onOpenDonation }) {
   return (
     <section id="cta" className="section-padding bg-gradient-to-br from-trust-950 via-slate-900 to-fresh-950 text-white relative overflow-hidden">
       {/* Decorative gradient blur */}
@@ -18,10 +18,11 @@ export default function CallToAction({ onOpenModal }) {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-fresh-300 text-xs font-semibold tracking-widest uppercase mb-6 border border-white/10">
-            <Sparkles className="w-3.5 h-3.5" />
-            Zero-Waste Movement
-          </span>
+          <div className="mb-6 flex items-center justify-center gap-4">
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+            <span className="text-emerald-400 text-xs font-black tracking-[0.25em] uppercase">Zero-Waste Movement</span>
+            <div className="w-12 h-[2px] bg-emerald-500/40"></div>
+          </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight text-balance">
             Join the Zero-Waste Movement Today
@@ -35,15 +36,15 @@ export default function CallToAction({ onOpenModal }) {
           {/* Action Buttons */}
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
-              onClick={() => onOpenModal && onOpenModal('donor')}
+              onClick={() => onOpenDonation && onOpenDonation()}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-trust-950 bg-gradient-to-r from-fresh-400 to-fresh-300 hover:from-fresh-300 hover:to-fresh-200 shadow-2xl shadow-fresh-500/30 transition-all duration-300 hover:scale-[1.03] text-base"
             >
               <HeartHandshake className="w-5 h-5" />
               Sign Up as Donor
             </button>
             <button
-              onClick={() => onOpenModal && onOpenModal('volunteer')}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-semibold text-white bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 text-base"
+              onClick={() => onOpenSignIn && onOpenSignIn('volunteer')}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 border border-slate-700 text-white font-bold hover:border-emerald-400 hover:text-emerald-400 transition-all duration-300 text-base"
             >
               <UserPlus className="w-5 h-5" />
               Join as Volunteer
