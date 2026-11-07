@@ -11,6 +11,11 @@ const port = Number(process.env.PORT || 3001);
 const jwtSecret = process.env.JWT_SECRET || 'foodbridge-local-development-secret';
 const dataDirectory = path.resolve(process.cwd(), 'data');
 const usersFile = path.join(dataDirectory, 'users.json');
+const distDirectory = path.resolve(process.cwd(), 'dist');
+
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+  throw new Error('JWT_SECRET must be configured in production.');
+}
 
 await fs.mkdir(dataDirectory, { recursive: true });
 
@@ -135,4 +140,16 @@ app.post('/api/auth/reset-password', async (req, res) => {
   res.json({ message: 'Password updated successfully. You can now sign in.' });
 });
 
-app.listen(port, () => console.log(`Anna Sethu API running at http://localhost:${port}`));
+app.use('/api', (_req, res) => {
+  res.status(404).json({ error: 'API endpoint not found.' });
+});
+
+app.use(express.static(distDirectory));
+app.use((req, res, next) => {
+  if (req.method !== 'GET') return next();
+  res.sendFile(path.join(distDirectory, 'index.html'), (error) => {
+    if (error) next(error);
+  });
+});
+
+app.listen(port, () => console.log(`Anna Sethu running at http://localhost:${port}`));
