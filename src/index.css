@@ -90,27 +90,30 @@
   }
 }
 
-.hero-tunnel {
-  perspective: 950px;
+.hero-image-grid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  perspective: 1200px;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 48%, rgba(74, 222, 128, 0.14), transparent 24%),
-    linear-gradient(180deg, rgba(9, 20, 45, 0.12), rgba(9, 20, 45, 0.82));
+}
+
+.hero-tunnel {
+  display: none;
 }
 
 .hero-tunnel-track {
   position: absolute;
   inset: -8%;
   transform-style: preserve-3d;
-  mask-image: linear-gradient(to bottom, transparent 4%, black 18%, black 82%, transparent 96%);
 }
 
 .hero-tunnel-card {
   position: absolute;
+  top: 50%;
+  left: 50%;
   width: clamp(150px, 21vw, 280px);
   aspect-ratio: 4 / 3;
-  left: 50%;
-  top: 50%;
   overflow: hidden;
   border: 5px solid rgba(255, 255, 255, 0.9);
   border-radius: 18px;
@@ -125,17 +128,14 @@
   height: 100%;
   object-fit: cover;
   filter: saturate(1.05) brightness(1.16) contrast(1.08);
-  opacity: .88;
+  opacity: 0.88;
   animation: hero-card-ambient 6s ease-in-out infinite;
-  transition: opacity .35s ease;
-}
-
-.hero-tunnel-card:hover img {
-  opacity: 1;
 }
 
 .hero-tunnel-visible .hero-tunnel-card {
-  animation: tunnel-enter .85s cubic-bezier(.2,.75,.25,1) var(--card-delay) forwards;
+  animation-duration: 0.85s;
+  animation-timing-function: cubic-bezier(.2,.75,.25,1);
+  animation-fill-mode: forwards;
 }
 
 .hero-tunnel-visible .hero-tunnel-card-1 { animation-name: tunnel-card-one; }
@@ -143,6 +143,12 @@
 .hero-tunnel-visible .hero-tunnel-card-3 { animation-name: tunnel-card-three; }
 .hero-tunnel-visible .hero-tunnel-card-4 { animation-name: tunnel-card-four; }
 .hero-tunnel-visible .hero-tunnel-card-5 { animation-name: tunnel-card-five; }
+
+.hero-tunnel-card-1 { animation-delay: 0ms; }
+.hero-tunnel-card-2 { animation-delay: 90ms; }
+.hero-tunnel-card-3 { animation-delay: 180ms; }
+.hero-tunnel-card-4 { animation-delay: 270ms; }
+.hero-tunnel-card-5 { animation-delay: 360ms; }
 
 @keyframes tunnel-card-one {
   from { opacity: 0; transform: translate3d(-240%, -190%, -700px) rotate(-12deg) scale(.5); }
@@ -174,6 +180,96 @@
   50% { transform: translate3d(0, -8px, 0) scale(1.025); }
 }
 
+.hero-image-row {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  overflow: hidden;
+  transform: perspective(1200px) rotateX(10deg) rotateZ(-5deg);
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.hero-image-row-1 {
+  top: 8%;
+}
+
+.hero-image-row-2 {
+  bottom: 8%;
+  transform: perspective(1200px) rotateX(10deg) rotateZ(5deg);
+}
+
+.hero-image-track {
+  display: flex;
+  width: max-content;
+  gap: clamp(12px, 2vw, 24px);
+}
+
+.hero-image-card {
+  flex: 0 0 clamp(150px, 23vw, 300px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.82);
+  border-radius: 20px;
+  background: #1e293b;
+  box-shadow: 0 24px 60px rgba(2, 6, 23, 0.42);
+}
+
+.hero-image-card:nth-child(odd) {
+  transform: translateY(12px) rotate(-2deg);
+}
+
+.hero-image-card:nth-child(even) {
+  transform: translateY(-10px) rotate(2deg);
+}
+
+.hero-image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.08) brightness(0.82);
+}
+
+.hero-image-overlay {
+  background:
+    radial-gradient(ellipse at center, rgba(8, 15, 31, 0.96) 0%, rgba(8, 15, 31, 0.74) 38%, rgba(8, 15, 31, 0.18) 100%),
+    linear-gradient(180deg, rgba(8, 15, 31, 0.16), rgba(8, 15, 31, 0.58));
+}
+
+.hero-copy-backdrop {
+  background: radial-gradient(ellipse at center, rgba(8, 15, 31, 0.44), transparent 72%);
+}
+
+@media (min-width: 641px) {
+  .hero-image-grid {
+    display: none;
+  }
+
+  .hero-tunnel {
+    position: absolute;
+    inset: 0;
+    display: block;
+    overflow: hidden;
+    perspective: 950px;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(74, 222, 128, 0.14), transparent 24%),
+      linear-gradient(180deg, rgba(9, 20, 45, 0.12), rgba(9, 20, 45, 0.82));
+  }
+
+  .hero-image-overlay {
+    background: none;
+  }
+
+  .hero-copy-backdrop {
+    background: radial-gradient(ellipse at center, rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.4) 42%, transparent 76%);
+  }
+}
+
+@keyframes hero-image-slider {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @keyframes footer-wordmark {
   from {
     transform: translateY(35%) scaleX(.92);
@@ -191,39 +287,55 @@
 }
 
 @media (max-width: 640px) {
-  .hero-tunnel-track {
-    inset: 0;
-    mask-image: linear-gradient(to bottom, transparent 1%, black 12%, black 88%, transparent 99%);
+  .hero-image-track {
+    animation: hero-image-slider 42s linear infinite;
+    will-change: transform;
   }
 
-  .hero-tunnel-card {
-    width: clamp(92px, 29vw, 118px);
+  .hero-image-row-2 .hero-image-track {
+    animation-direction: reverse;
+    animation-duration: 48s;
+  }
+
+  .hero-image-row {
+    left: -28%;
+    width: 156%;
+  }
+
+  .hero-image-row-1 {
+    top: 10%;
+  }
+
+  .hero-image-row-2 {
+    bottom: 10%;
+  }
+
+  .hero-image-card {
+    flex-basis: clamp(120px, 38vw, 190px);
     border-width: 3px;
-    border-radius: 12px;
-    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.5);
+    border-radius: 14px;
   }
 
-  .hero-tunnel-visible .hero-tunnel-card-5 {
-    display: none;
+  .hero-image-overlay {
+    background:
+      radial-gradient(ellipse at center, rgba(8, 15, 31, 0.97) 0%, rgba(8, 15, 31, 0.82) 48%, rgba(8, 15, 31, 0.36) 100%),
+      linear-gradient(180deg, rgba(8, 15, 31, 0.2), rgba(8, 15, 31, 0.62));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image-track {
+    animation: none;
   }
 
-  @keyframes tunnel-card-one {
-    from { opacity: 0; transform: translate3d(-155%, -205%, -700px) rotate(-10deg) scale(.5); }
-    to { opacity: .68; transform: translate3d(-155%, -205%, -90px) rotate(-8deg) scale(.82); }
+  .hero-tunnel-visible .hero-tunnel-card {
+    animation: none;
+    opacity: 0.75;
   }
 
-  @keyframes tunnel-card-two {
-    from { opacity: 0; transform: translate3d(55%, -205%, -700px) rotate(8deg) scale(.5); }
-    to { opacity: .68; transform: translate3d(55%, -205%, -70px) rotate(7deg) scale(.82); }
-  }
-
-  @keyframes tunnel-card-three {
-    from { opacity: 0; transform: translate3d(-160%, 105%, -650px) rotate(8deg) scale(.5); }
-    to { opacity: .72; transform: translate3d(-160%, 105%, -50px) rotate(6deg) scale(.84); }
-  }
-
-  @keyframes tunnel-card-four {
-    from { opacity: 0; transform: translate3d(60%, 105%, -650px) rotate(-8deg) scale(.5); }
-    to { opacity: .72; transform: translate3d(60%, 105%, -40px) rotate(-6deg) scale(.84); }
-  }
+  .hero-tunnel-card-1 { transform: translate3d(-240%, -190%, -90px) rotate(-10deg) scale(.82); }
+  .hero-tunnel-card-2 { transform: translate3d(150%, -190%, -70px) rotate(9deg) scale(.82); }
+  .hero-tunnel-card-3 { transform: translate3d(-245%, 95%, -50px) rotate(7deg) scale(.84); }
+  .hero-tunnel-card-4 { transform: translate3d(145%, 95%, -40px) rotate(-7deg) scale(.84); }
+  .hero-tunnel-card-5 { transform: translate3d(-300%, -20%, -240px) rotate(-16deg) scale(.72); }
 }

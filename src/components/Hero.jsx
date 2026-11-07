@@ -2,6 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Users, ChevronDown } from 'lucide-react';
 
+const heroImages = [
+  { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=85', alt: 'Children sharing a meal' },
+  { src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=85', alt: 'Children receiving nutritious food' },
+  { src: 'https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&w=900&q=85', alt: 'Young people enjoying food together' },
+  { src: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85', alt: 'Wholesome community meal' },
+  { src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85', alt: 'Fresh food prepared for sharing' },
+  { src: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=85', alt: 'Fresh vegetables prepared for a meal' },
+  { src: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85', alt: 'Colorful fresh food bowl' },
+  { src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=85', alt: 'Food being prepared to share' },
+  { src: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85', alt: 'Freshly prepared meal' },
+  { src: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85', alt: 'Nutritious meal made with fresh ingredients' },
+];
+
 export default function Hero({ onOpenSignIn, onOpenDonation }) {
   const sectionRef = useRef(null);
   const [heroVisible, setHeroVisible] = useState(false);
@@ -18,39 +31,39 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
     return () => observer.disconnect();
   }, []);
 
-  const tunnelImages = [
-    { src: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=900&q=85', alt: 'Children sharing a meal' },
-    { src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=85', alt: 'Children receiving nutritious food' },
-    { src: 'https://images.unsplash.com/photo-1594708767771-a7502209ff51?auto=format&fit=crop&w=900&q=85', alt: 'Young people enjoying food together' },
-    { src: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85', alt: 'Wholesome community meal' },
-    { src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=85', alt: 'Fresh food prepared for sharing' },
-  ];
-
   return (
-    <section ref={sectionRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-trust-950 via-trust-900 to-slate-900">
-      <div className={`hero-tunnel absolute inset-0 ${heroVisible ? 'hero-tunnel-visible' : ''}`} aria-hidden="true">
+    <section ref={sectionRef} className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#080F1F]">
+      <div className="hero-image-grid" aria-hidden="true">
+        {[heroImages.slice(0, 5), heroImages.slice(5)].map((row, rowIndex) => (
+          <div className={`hero-image-row hero-image-row-${rowIndex + 1}`} key={rowIndex}>
+            <div className="hero-image-track">
+              {[...row, ...row].map((image, imageIndex) => (
+                <div className="hero-image-card" key={`${image.src}-${imageIndex}`}>
+                  <img src={image.src} alt="" />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className={`hero-tunnel ${heroVisible ? 'hero-tunnel-visible' : ''}`} aria-hidden="true">
         <div className="hero-tunnel-track">
-          {tunnelImages.map((image, index) => (
-            <div
-              key={image.src}
-              className={`hero-tunnel-card hero-tunnel-card-${index + 1}`}
-              style={{ '--card-delay': `${index * 90}ms` }}
-            >
-              <img src={image.src} alt={image.alt} />
+          {heroImages.slice(0, 5).map((image, index) => (
+            <div className={`hero-tunnel-card hero-tunnel-card-${index + 1}`} key={image.src}>
+              <img src={image.src} alt="" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-fresh-500/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-trust-400/10 rounded-full blur-3xl animate-float-delayed" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-earth-500/5 rounded-full blur-3xl animate-pulse-soft" />
+        <div className="hero-image-overlay absolute inset-0" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 text-center py-24 sm:py-32">
-        <div className="relative z-20 mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950/80 via-slate-950/40 to-transparent px-4 py-6 sm:p-8 text-center">
+      <div className="relative z-10 mx-auto w-full max-w-5xl px-4 py-24 text-center sm:px-6 sm:py-32 lg:px-8">
+        <div className="hero-copy-backdrop relative z-20 mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] px-4 py-6 text-center sm:p-8">
         <motion.div
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -69,7 +82,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="mt-3 text-[2.35rem] sm:mt-8 sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] text-balance"
+          className="mt-3 text-[2.35rem] font-black leading-[1.08] tracking-tight text-white text-balance sm:mt-8 sm:text-6xl lg:text-7xl"
         >
           Good Food Should{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
@@ -111,7 +124,6 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           </button>
         </motion.div>
 
-        {/* Social proof */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -125,7 +137,6 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
