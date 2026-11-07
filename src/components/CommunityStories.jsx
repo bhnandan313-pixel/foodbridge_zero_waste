@@ -34,6 +34,7 @@ const stories = [
 
 export default function CommunityStories() {
   const [current, setCurrent] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
 
   // Auto-advance every 7 seconds
   useEffect(() => {
@@ -60,8 +61,20 @@ export default function CommunityStories() {
         </div>
 
         {/* Carousel Container */}
-        <div className="max-w-4xl mx-auto relative">
-          <div className="relative min-h-[340px] sm:min-h-[280px] flex items-center">
+        <div
+          className="max-w-4xl mx-auto relative touch-pan-y"
+          onTouchStart={(event) => setTouchStart(event.changedTouches[0].clientX)}
+          onTouchEnd={(event) => {
+            if (touchStart === null) return;
+            const distance = event.changedTouches[0].clientX - touchStart;
+            if (Math.abs(distance) > 48) {
+              if (distance > 0) prev();
+              else next();
+            }
+            setTouchStart(null);
+          }}
+        >
+          <div className="relative min-h-[360px] sm:min-h-[280px] flex items-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={stories[current].id}

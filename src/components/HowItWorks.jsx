@@ -92,6 +92,7 @@ export default function HowItWorks() {
           className="relative"
         >
           {/* Background Connecting Line (Desktop) */}
+          <div className="absolute bottom-16 left-[48px] top-16 w-px bg-gradient-to-b from-blue-500 via-emerald-400 to-orange-400 md:hidden" />
           <div className="hidden md:block absolute top-12 left-[10%] right-[10%] h-1 bg-slate-100 rounded-full overflow-hidden">
             <motion.div 
               initial={{ width: "0%" }}
@@ -114,8 +115,8 @@ export default function HowItWorks() {
                   {/* The Icon Node */}
                   <div className="relative z-10 mb-8">
                     <div className="absolute inset-0 bg-current opacity-20 blur-xl rounded-full scale-150 group-hover:scale-175 transition-transform duration-500" style={{ color: `var(--tw-${step.color.split(' ')[1].replace('to-', '')})` }} />
-                    <div className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${step.color} shadow-xl ${step.shadow} flex items-center justify-center transform group-hover:-translate-y-2 transition-all duration-300 relative z-20`}>
-                      <Icon className="text-white w-10 h-10" strokeWidth={2} />
+                    <div className={`flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br ${step.color} shadow-xl ${step.shadow} relative z-20 transition-all duration-300 sm:h-24 sm:w-24 md:group-hover:-translate-y-2`}>
+                      <Icon className="h-8 w-8 text-white sm:h-10 sm:w-10" strokeWidth={2} />
                     </div>
                   </div>
 

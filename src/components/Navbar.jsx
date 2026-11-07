@@ -19,6 +19,20 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
   }, []);
 
   useEffect(() => {
+    if (!isOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     const availableQuery = query(collection(db, 'donations'), where('status', '==', 'Available'));
     return onSnapshot(availableQuery, (snapshot) => setActiveDonationsCount(snapshot.size));
   }, []);
@@ -153,6 +167,8 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
                 : 'text-white hover:bg-white/10'
             }`}
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
+            aria-controls="mobile-navigation"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -162,24 +178,42 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden overflow-hidden bg-slate-900/95 rounded-2xl mt-2 shadow-2xl border border-slate-800 backdrop-blur-xl"
+              id="mobile-navigation"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="lg:hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-md"
+              onMouseDown={(event) => {
+                if (event.target === event.currentTarget) setIsOpen(false);
+              }}
             >
-              <div className="py-4 px-2 space-y-1">
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+                className="ml-auto flex h-[100dvh] w-[min(88vw,390px)] flex-col border-l border-slate-800 bg-[#080F1F] px-5 pb-6 pt-5 shadow-2xl"
+              >
+                <div className="mb-7 flex items-center justify-between border-b border-slate-800 pb-4">
+                  <span className="text-lg font-black text-white">Menu</span>
+                  <button type="button" onClick={() => setIsOpen(false)} className="grid h-11 w-11 place-items-center rounded-full border border-slate-800 text-slate-300" aria-label="Close menu">
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+                <nav className="flex-1 overflow-y-auto">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center justify-between px-4 py-2.5 rounded-lg text-base font-medium text-[#94A3B8] hover:bg-[#111D35] hover:text-[#34D399] transition-colors"
+                    className="flex min-h-14 items-center justify-between border-b border-slate-800/70 px-1 text-base font-bold text-slate-200 active:text-[#34D399] transition-colors"
                   >
                     {link.label}
                     <ChevronRight className="w-4 h-4 text-slate-400" />
                   </a>
                 ))}
-                <div className="pt-3 mt-3 border-t border-[#263650] px-2 space-y-2">
+                </nav>
+                <div className="mt-4 space-y-3 border-t border-[#263650] pt-4">
                   <button
                     type="button"
                     onClick={() => { setIsOpen(false); setCurrentView?.('radar'); }}
@@ -193,7 +227,7 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
                   </button>
                   {user ? (
                     <>
-                      <div className="px-4 py-2 text-sm font-bold text-slate-800">Hi, {user.name}</div>
+                      <div className="px-1 py-2 text-sm font-bold text-slate-300">Hi, {user.name}</div>
                       <button
                         onClick={() => { setIsOpen(false); onLogout && onLogout(); }}
                         className="w-full py-2.5 text-sm font-semibold text-red-600 bg-red-50 rounded-xl"
@@ -220,13 +254,13 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
                   )}
                   <button
                     onClick={() => { setIsOpen(false); onOpenDonation && onOpenDonation(); }}
-                    className="w-full inline-flex items-center justify-center gap-2 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-fresh-600 to-fresh-500 rounded-xl"
+                    className="min-h-12 w-full inline-flex items-center justify-center gap-2 py-3 text-sm font-bold text-slate-950 bg-emerald-400 rounded-xl"
                   >
                     <HeartHandshake className="w-4 h-4" />
                     Donate Food
                   </button>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

@@ -31,7 +31,14 @@ export default function DonationForm({ isOpen, onClose, user, onAuthenticationRe
       setError('');
       setShowLoader(false);
       setMatchDetails(null);
+      return undefined;
     }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
   }, [isOpen]);
 
   const handleDonate = async (event) => {
@@ -110,7 +117,7 @@ export default function DonationForm({ isOpen, onClose, user, onAuthenticationRe
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[70] grid place-items-center bg-slate-950/75 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] grid place-items-end bg-slate-950/75 backdrop-blur-sm sm:place-items-center sm:p-4"
           role="dialog"
           aria-modal="true"
           aria-label="Donate surplus food"
@@ -122,8 +129,9 @@ export default function DonationForm({ isOpen, onClose, user, onAuthenticationRe
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
-            className="relative max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-3xl border border-slate-800 bg-slate-900/50 shadow-2xl shadow-emerald-900/10 backdrop-blur-xl"
+            className="relative max-h-[94dvh] w-full max-w-2xl overflow-y-auto rounded-t-[28px] border-x border-t border-slate-800 bg-[#0D1830] pb-[env(safe-area-inset-bottom)] shadow-2xl shadow-emerald-900/10 sm:max-h-[92vh] sm:rounded-3xl sm:border backdrop-blur-xl"
           >
+            <div className="mx-auto mt-2 h-1 w-10 rounded-full bg-slate-600 sm:hidden" aria-hidden="true" />
             <button
               type="button"
               onClick={onClose}
@@ -133,12 +141,12 @@ export default function DonationForm({ isOpen, onClose, user, onAuthenticationRe
               <X className="h-5 w-5" />
             </button>
 
-            <form onSubmit={handleDonate} className="p-7 sm:p-9">
+            <form onSubmit={handleDonate} className="px-5 pb-5 pt-7 sm:p-9">
               <div className="mb-7 grid h-14 w-14 place-items-center rounded-2xl bg-emerald-400 text-slate-950">
                 <UtensilsCrossed className="h-7 w-7" />
               </div>
               <p className="text-xs font-black uppercase tracking-[0.25em] text-emerald-400">Surplus food donation</p>
-              <h2 className="mt-2 text-3xl font-black tracking-tight text-white">Give Good Food a Second Chance.</h2>
+              <h2 className="mt-2 text-[clamp(1.65rem,8vw,2rem)] font-black leading-tight tracking-tight text-white">Give Good Food a Second Chance.</h2>
               <p className="mt-2 text-sm leading-relaxed text-slate-400">
                 Tell us what food is available. We&apos;ll help connect your donation with a nearby verified organization.
               </p>
@@ -240,7 +248,7 @@ export default function DonationForm({ isOpen, onClose, user, onAuthenticationRe
 
               <button
                 type="submit"
-                className="mt-6 w-full rounded-xl bg-emerald-400 py-3.5 text-sm text-slate-950 font-bold hover:bg-emerald-300 hover:scale-105 transition-all duration-300"
+                className="mt-6 min-h-12 w-full rounded-xl bg-emerald-400 px-4 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300 sm:hover:scale-[1.02]"
               >
                 Find an NGO for My Donation →
               </button>

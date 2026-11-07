@@ -13,7 +13,7 @@ export default function TheProblem() {
   }, []);
 
   return (
-    <section id="problem" className="relative py-32 bg-slate-950 text-white overflow-hidden flex flex-col items-center justify-center">
+    <section id="problem" className="relative flex flex-col items-center justify-center overflow-hidden bg-slate-950 py-20 text-white sm:py-24 lg:py-32">
       
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-96 bg-red-900/20 blur-[120px] rounded-full pointer-events-none" />
@@ -21,7 +21,7 @@ export default function TheProblem() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         
         {/* Provocative Headline */}
-        <div className="text-center max-w-3xl mx-auto mb-20">
+        <div className="mx-auto mb-12 max-w-3xl text-center sm:mb-16 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -39,9 +39,9 @@ export default function TheProblem() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ delay: 0.1 }}
-            className="text-5xl md:text-6xl font-black mb-6 leading-tight tracking-tight"
+            className="mb-5 text-[clamp(2rem,9vw,3.75rem)] font-black leading-[1.05] tracking-tight sm:mb-6"
           >
-            We produce enough food.<br />
+            We produce enough food.<br className="hidden sm:block" />
             <span className="text-slate-500">Yet millions struggle to find their next meal.</span>
           </motion.h2>
           <p className="text-lg text-slate-400 leading-relaxed">
@@ -49,12 +49,12 @@ export default function TheProblem() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-10 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 md:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
+            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-5 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 sm:p-8 lg:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
           >
             <div className="relative z-10">
               <h3 className="text-slate-400 font-bold text-sm mb-5 uppercase tracking-[0.2em]">Global Food Waste</h3>
@@ -70,7 +70,7 @@ export default function TheProblem() {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-10 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 md:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
+            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-5 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 sm:p-8 lg:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
           >
             <div className="relative z-10">
               <h3 className="text-slate-400 font-bold text-sm mb-5 uppercase tracking-[0.2em]">People Facing Hunger</h3>
@@ -86,7 +86,7 @@ export default function TheProblem() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-10 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 md:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
+            className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 p-5 backdrop-blur-xl shadow-2xl shadow-emerald-900/10 transition-all duration-300 sm:p-8 lg:p-14 hover:-translate-y-1 hover:border-emerald-500/30"
           >
             <div className="relative z-10">
               <h3 className="text-slate-400 font-bold text-sm mb-5 uppercase tracking-[0.2em]">Post-Harvest Food Loss</h3>
