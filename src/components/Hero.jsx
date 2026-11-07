@@ -48,7 +48,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
       </div>
       <div className={`hero-tunnel ${heroVisible ? 'hero-tunnel-visible' : ''}`} aria-hidden="true">
         <div className="hero-tunnel-track">
-          {heroImages.slice(0, 5).map((image, index) => (
+          {heroImages.slice(0, 8).map((image, index) => (
             <div className={`hero-tunnel-card hero-tunnel-card-${index + 1}`} key={image.src}>
               <img src={image.src} alt="" />
             </div>

@@ -143,12 +143,18 @@
 .hero-tunnel-visible .hero-tunnel-card-3 { animation-name: tunnel-card-three; }
 .hero-tunnel-visible .hero-tunnel-card-4 { animation-name: tunnel-card-four; }
 .hero-tunnel-visible .hero-tunnel-card-5 { animation-name: tunnel-card-five; }
+.hero-tunnel-visible .hero-tunnel-card-6 { animation-name: tunnel-card-six; }
+.hero-tunnel-visible .hero-tunnel-card-7 { animation-name: tunnel-card-seven; }
+.hero-tunnel-visible .hero-tunnel-card-8 { animation-name: tunnel-card-eight; }
 
 .hero-tunnel-card-1 { animation-delay: 0ms; }
 .hero-tunnel-card-2 { animation-delay: 90ms; }
 .hero-tunnel-card-3 { animation-delay: 180ms; }
 .hero-tunnel-card-4 { animation-delay: 270ms; }
 .hero-tunnel-card-5 { animation-delay: 360ms; }
+.hero-tunnel-card-6 { animation-delay: 450ms; }
+.hero-tunnel-card-7 { animation-delay: 540ms; }
+.hero-tunnel-card-8 { animation-delay: 630ms; }
 
 @keyframes tunnel-card-one {
   from { opacity: 0; transform: translate3d(-240%, -190%, -700px) rotate(-12deg) scale(.5); }
@@ -173,6 +179,21 @@
 @keyframes tunnel-card-five {
   from { opacity: 0; transform: translate3d(-300%, -20%, -900px) rotate(-16deg) scale(.5); }
   to { opacity: .58; transform: translate3d(-300%, -20%, -240px) rotate(-16deg) scale(.72); }
+}
+
+@keyframes tunnel-card-six {
+  from { opacity: 0; transform: translate3d(-175%, -45%, -700px) rotate(-9deg) scale(.5); }
+  to { opacity: .7; transform: translate3d(-175%, -45%, -100px) rotate(-7deg) scale(.78); }
+}
+
+@keyframes tunnel-card-seven {
+  from { opacity: 0; transform: translate3d(80%, -45%, -700px) rotate(9deg) scale(.5); }
+  to { opacity: .7; transform: translate3d(80%, -45%, -100px) rotate(7deg) scale(.78); }
+}
+
+@keyframes tunnel-card-eight {
+  from { opacity: 0; transform: translate3d(-60%, 150%, -700px) rotate(5deg) scale(.5); }
+  to { opacity: .68; transform: translate3d(-60%, 150%, -110px) rotate(4deg) scale(.76); }
 }
 
 @keyframes hero-card-ambient {
@@ -261,7 +282,10 @@
   }
 
   .hero-copy-backdrop {
-    background: radial-gradient(ellipse at center, rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.4) 42%, transparent 76%);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+    background: rgba(8, 15, 31, 0.94);
+    box-shadow: 0 24px 80px rgba(2, 6, 23, 0.48);
+    backdrop-filter: blur(14px);
   }
 }
 
@@ -338,4 +362,7 @@
   .hero-tunnel-card-3 { transform: translate3d(-245%, 95%, -50px) rotate(7deg) scale(.84); }
   .hero-tunnel-card-4 { transform: translate3d(145%, 95%, -40px) rotate(-7deg) scale(.84); }
   .hero-tunnel-card-5 { transform: translate3d(-300%, -20%, -240px) rotate(-16deg) scale(.72); }
+  .hero-tunnel-card-6 { transform: translate3d(-175%, -45%, -100px) rotate(-7deg) scale(.78); }
+  .hero-tunnel-card-7 { transform: translate3d(80%, -45%, -100px) rotate(7deg) scale(.78); }
+  .hero-tunnel-card-8 { transform: translate3d(-60%, 150%, -110px) rotate(4deg) scale(.76); }
 }
