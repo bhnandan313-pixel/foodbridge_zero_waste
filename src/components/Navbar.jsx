@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, HeartHandshake, ChevronRight, Radar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { collection, doc, onSnapshot, query, setDoc, where } from 'firebase/firestore';
 import { db } from '../firebase';
+import { ngos } from '../utils/demoData';
 
 export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, setCurrentView }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDonationsCount, setActiveDonationsCount] = useState(0);
+  const [seedStatus, setSeedStatus] = useState('');
+  const isAdmin = String(user?.role ?? '').toLowerCase() === 'admin';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -27,6 +30,20 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
     { label: 'Impact', href: '#impact' },
     { label: 'Stories', href: '#stories' },
   ];
+
+  const seedDemoNGOs = async () => {
+    try {
+      await Promise.all(ngos.map((ngo) => setDoc(doc(db, 'users', ngo.id), {
+        ...ngo,
+        role: 'ngo',
+        verified: true,
+        demoEntity: true,
+      })));
+      setSeedStatus('Demo NGOs seeded');
+    } catch (seedError) {
+      setSeedStatus(seedError.message || 'Unable to seed demo NGOs');
+    }
+  };
 
   return (
     <header
@@ -108,6 +125,16 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
                 Sign In
               </button>
             )}
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={seedDemoNGOs}
+                className="px-3 py-2 text-xs font-bold text-[#34D399] border border-[#263650] rounded-xl hover:bg-[#111D35] transition-colors"
+                title={seedStatus}
+              >
+                {seedStatus || 'Seed Demo Data'}
+              </button>
+            )}
             <button
               onClick={() => onOpenDonation && onOpenDonation()}
               className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-fresh-600 to-fresh-500 hover:from-fresh-700 hover:to-fresh-600 rounded-xl shadow-md shadow-fresh-200/50 hover:shadow-lg hover:shadow-fresh-300/50 transition-all duration-300 hover:scale-[1.03]"
@@ -180,6 +207,15 @@ export default function Navbar({ onOpenSignIn, onOpenDonation, user, onLogout, s
                       className="w-full py-2.5 text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl"
                     >
                       Sign In
+                    </button>
+                  )}
+                  {isAdmin && (
+                    <button
+                      type="button"
+                      onClick={seedDemoNGOs}
+                      className="w-full py-2.5 text-xs font-bold text-[#34D399] bg-[#111D35] rounded-xl"
+                    >
+                      {seedStatus || 'Seed Demo Data'}
                     </button>
                   )}
                   <button
