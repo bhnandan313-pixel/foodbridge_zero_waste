@@ -55,10 +55,16 @@ export default function ImpactMetrics() {
 
       snapshot.forEach((documentSnapshot) => {
         const donation = documentSnapshot.data();
-        if (donation.status !== 'Delivered') return;
+        const status = String(donation.status || '').trim().toLowerCase();
+        if (status !== 'delivered') return;
 
-        meals += Number(donation.meals ?? 0);
-        kilograms += Number(donation.weightKg ?? donation.kilograms ?? 0);
+        const quantity = Number(donation.meals ?? donation.quantity ?? 0);
+        if (String(donation.quantityUnit).toLowerCase() === 'kg') {
+          kilograms += Number(donation.weightKg ?? quantity ?? 0);
+        } else {
+          meals += Number(quantity);
+          kilograms += Number(donation.weightKg ?? donation.kilograms ?? quantity * 0.5);
+        }
       });
 
       setImpact((current) => ({ ...current, meals, kilograms }));

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, ExternalLink, LoaderCircle, MapPin, Users, PackageCheck, Truck, UtensilsCrossed, HeartHandshake } from 'lucide-react';
-import { collection, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { ngos } from '../utils/demoData';
 
@@ -156,7 +156,7 @@ export default function NgoDashboard({ setCurrentView }) {
           ...donation.data(),
         }));
         setAllDonations(allDonations);
-        setDonations(allDonations.filter((donation) => donation.status === 'Available'));
+        setDonations(allDonations.filter((donation) => String(donation.status || 'Available').trim().toLowerCase() === 'available'));
         setLoading(false);
       },
       (snapshotError) => {
@@ -178,8 +178,17 @@ export default function NgoDashboard({ setCurrentView }) {
     await updateDoc(doc(db, 'donations', donationId), { status: 'Claimed' });
   };
 
-  const activePickups = allDonations.filter((donation) => donation.status === 'Claimed').length;
-  const completedRescues = allDonations.filter((donation) => donation.status === 'Delivered').length;
+  const handleDelivery = async (donationId) => {
+    await updateDoc(doc(db, 'donations', donationId), {
+      status: 'Delivered',
+      deliveredAt: serverTimestamp(),
+    });
+  };
+
+  const normalizeStatus = (status) => String(status || 'Available').trim().toLowerCase();
+  const claimedDonations = allDonations.filter((donation) => normalizeStatus(donation.status) === 'claimed');
+  const activePickups = claimedDonations.length;
+  const completedRescues = allDonations.filter((donation) => normalizeStatus(donation.status) === 'delivered').length;
   const radarStats = [
     { label: 'Available Donations', value: donations.length, icon: PackageCheck },
     { label: 'Nearby NGOs', value: ngoCount, icon: Users },
@@ -302,6 +311,30 @@ export default function NgoDashboard({ setCurrentView }) {
               ))}
             </AnimatePresence>
           </motion.div>
+        )}
+
+        {claimedDonations.length > 0 && (
+          <div className="mt-10">
+            <h3 className="mb-4 text-lg font-black text-white">Active pickups</h3>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {claimedDonations.map((donation) => (
+                <article key={donation.id} className="rounded-2xl border border-emerald-400/20 bg-slate-900/60 p-5">
+                  <p className="font-black text-white">{donation.foodDescription || donation.foodType || 'Food donation'}</p>
+                  <p className="mt-2 text-sm text-slate-400">
+                    {Number(donation.meals ?? donation.quantity ?? 0)} {donation.quantityUnit === 'kg' ? 'kg' : 'meals'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleDelivery(donation.id)}
+                    className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-3 text-sm font-black text-slate-950 transition hover:bg-emerald-300"
+                  >
+                    <PackageCheck className="h-4 w-4" />
+                    Confirm Delivery
+                  </button>
+                </article>
+              ))}
+            </div>
+          </div>
         )}
       </div>
     </section>
