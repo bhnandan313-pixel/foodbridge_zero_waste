@@ -7,10 +7,12 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-[#080F1F] text-[#94A3B8];
+    overflow-x: hidden;
   }
 
   h1, h2, h3, .section-title {
@@ -186,4 +188,42 @@
 @keyframes sticker-bounce {
   0%, 100% { transform: rotate(-12deg) translateY(0); }
   50% { transform: rotate(-8deg) translateY(-7px); }
+}
+
+@media (max-width: 640px) {
+  .hero-tunnel-track {
+    inset: 0;
+    mask-image: linear-gradient(to bottom, transparent 1%, black 12%, black 88%, transparent 99%);
+  }
+
+  .hero-tunnel-card {
+    width: clamp(92px, 29vw, 118px);
+    border-width: 3px;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(2, 6, 23, 0.5);
+  }
+
+  .hero-tunnel-visible .hero-tunnel-card-5 {
+    display: none;
+  }
+
+  @keyframes tunnel-card-one {
+    from { opacity: 0; transform: translate3d(-155%, -205%, -700px) rotate(-10deg) scale(.5); }
+    to { opacity: .68; transform: translate3d(-155%, -205%, -90px) rotate(-8deg) scale(.82); }
+  }
+
+  @keyframes tunnel-card-two {
+    from { opacity: 0; transform: translate3d(55%, -205%, -700px) rotate(8deg) scale(.5); }
+    to { opacity: .68; transform: translate3d(55%, -205%, -70px) rotate(7deg) scale(.82); }
+  }
+
+  @keyframes tunnel-card-three {
+    from { opacity: 0; transform: translate3d(-160%, 105%, -650px) rotate(8deg) scale(.5); }
+    to { opacity: .72; transform: translate3d(-160%, 105%, -50px) rotate(6deg) scale(.84); }
+  }
+
+  @keyframes tunnel-card-four {
+    from { opacity: 0; transform: translate3d(60%, 105%, -650px) rotate(-8deg) scale(.5); }
+    to { opacity: .72; transform: translate3d(60%, 105%, -40px) rotate(-6deg) scale(.84); }
+  }
 }

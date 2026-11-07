@@ -27,7 +27,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
   ];
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-trust-950 via-trust-900 to-slate-900">
+    <section ref={sectionRef} className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-trust-950 via-trust-900 to-slate-900">
       <div className={`hero-tunnel absolute inset-0 ${heroVisible ? 'hero-tunnel-visible' : ''}`} aria-hidden="true">
         <div className="hero-tunnel-track">
           {tunnelImages.map((image, index) => (
@@ -49,19 +49,19 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-earth-500/5 rounded-full blur-3xl animate-pulse-soft" />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-32">
-        <div className="relative z-20 mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950/80 via-slate-950/40 to-transparent p-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 text-center py-24 sm:py-32">
+        <div className="relative z-20 mx-auto flex max-w-4xl flex-col items-center rounded-[2rem] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-950/80 via-slate-950/40 to-transparent px-4 py-6 sm:p-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="relative z-20 mb-6 flex items-center justify-center gap-4"
+          className="relative z-20 mb-4 sm:mb-6 flex items-center justify-center gap-2 sm:gap-4"
         >
-          <div className="h-[2px] w-12 bg-emerald-500/40"></div>
-          <span className="text-xs font-black uppercase tracking-[0.25em] text-emerald-400">
+          <div className="hidden h-[2px] w-12 bg-emerald-500/40 sm:block"></div>
+          <span className="text-[10px] font-black uppercase tracking-[0.16em] text-emerald-400 sm:text-xs sm:tracking-[0.25em]">
             Rescuing Food. Restoring Hope.
           </span>
-          <div className="h-[2px] w-12 bg-emerald-500/40"></div>
+          <div className="hidden h-[2px] w-12 bg-emerald-500/40 sm:block"></div>
         </motion.div>
 
         {/* Headline */}
@@ -69,7 +69,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.6 }}
-          className="mt-8 text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.1] text-balance"
+          className="mt-3 text-[2.35rem] sm:mt-8 sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08] text-balance"
         >
           Good Food Should{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
@@ -83,7 +83,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto"
+          className="mt-5 text-base sm:mt-6 sm:text-xl text-slate-300 leading-relaxed max-w-2xl mx-auto"
         >
           Anna Sethu connects restaurants, food businesses, and event organizers with verified NGOs to rescue surplus food and deliver it to communities that need it.
         </motion.p>
@@ -93,7 +93,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6 }}
-          className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="mt-7 flex w-full flex-col sm:mt-10 sm:w-auto sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <button
             onClick={() => onOpenDonation && onOpenDonation()}
@@ -116,7 +116,7 @@ export default function Hero({ onOpenSignIn, onOpenDonation }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
-          className="mt-16 flex items-center justify-center gap-6 text-sm text-slate-400"
+          className="mt-8 sm:mt-16 flex items-center justify-center gap-6 text-xs sm:text-sm text-slate-400"
         >
           <span>
             Building a network of food donors, NGOs, and volunteers.
